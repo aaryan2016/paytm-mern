@@ -1,4 +1,4 @@
-const InputBox = ({ label, placeholder, type }) => {
+const InputBox = ({ label, placeholder, type, onChange }) => {
   const inputType = type ? type : "text"
   return (
     <div>
@@ -6,6 +6,7 @@ const InputBox = ({ label, placeholder, type }) => {
       <input
         type={inputType}
         placeholder={placeholder}
+        onChange={onChange}
         className="w-full px-2 py-1 border rounded border-slate-200"
       />
     </div>
