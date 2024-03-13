@@ -32,6 +32,13 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     })
   }
 
+  if (amount <= 0) {
+    await session.abortTransaction()
+    return res.status(400).json({
+      message: "Invalid transaction amount",
+    })
+  }
+
   const toAccount = await Account.findOne({ userId: to }).session(session)
 
   if (!toAccount) {

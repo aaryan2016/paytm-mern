@@ -9,17 +9,16 @@ const Dashboard = () => {
   const [balance, setBalance] = useState(0)
 
   useEffect(() => {
-    const data = async () => {
-      const abc = await axios.get("http://localhost:3000/api/v1/me", {
+    axios
+      .get("http://localhost:3000/api/v1/me", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
-      console.log(abc)
-      setFirstname(abc.data.firstname)
-      setBalance(abc.data.balance)
-    }
-    data()
+      .then((response) => {
+        setFirstname(response.data.firstname)
+        setBalance(response.data.balance)
+      })
   }, [])
   return (
     <div>

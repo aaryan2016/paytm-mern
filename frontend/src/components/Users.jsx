@@ -68,7 +68,7 @@ function User({ user }) {
       <div className="flex items-center">
         <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mr-2">
           <div className="flex flex-col justify-center h-full text-xl">
-            {user.firstname[0]}
+            {user.firstname[0].toUpperCase()}
           </div>
         </div>
         <div className="flex flex-col justify-center h-full">
