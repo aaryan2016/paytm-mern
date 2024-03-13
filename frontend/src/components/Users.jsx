@@ -3,18 +3,36 @@ import { Button } from "./Button"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-export default function Users() {
+function useDebounce(value, timeout) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(() => {
+    let timeoutNumber = setTimeout(() => {
+      setDebouncedValue(value)
+    }, timeout)
+
+    return () => {
+      clearTimeout(timeoutNumber)
+    }
+  }, [timeout, value])
+
+  return debouncedValue
+}
+
+export default function Users({ loggedInFirstname }) {
   //Replace with Backend Call
   const [users, setUsers] = useState([])
   const [filter, setFilter] = useState("")
 
+  const debouncedValue = useDebounce(filter, 500)
+
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+      .get("http://localhost:3000/api/v1/user/bulk?filter=" + debouncedValue)
       .then((response) => {
         setUsers(response.data.user)
       })
-  }, [filter])
+  }, [debouncedValue])
 
   return (
     <>
@@ -30,9 +48,13 @@ export default function Users() {
         />
       </div>
       <div>
-        {users.map((user, index) => (
-          <User key={index} user={user} />
-        ))}
+        {!!users &&
+          users.map(
+            (user, index) =>
+              user.firstname !== loggedInFirstname && (
+                <User key={index} user={user} />
+              )
+          )}
       </div>
     </>
   )
