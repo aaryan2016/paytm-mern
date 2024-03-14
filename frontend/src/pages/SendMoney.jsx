@@ -43,8 +43,8 @@ const SendMoney = () => {
                 />
               </div>
               <button
-                onClick={() => {
-                  axios.post(
+                onClick={async () => {
+                  await axios.post(
                     "http://localhost:3000/api/v1/account/transfer",
                     {
                       to: id,

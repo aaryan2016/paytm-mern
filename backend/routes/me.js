@@ -18,6 +18,7 @@ router.get("/", authMiddleware, async (req, res) => {
   return res.json({
     firstname: user.userId.firstname,
     lastname: user.userId.lastname,
+    userId: user.userId._id,
     balance: user.balance.toFixed(2),
   })
 })
